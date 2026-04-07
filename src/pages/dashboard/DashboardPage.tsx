@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom"
-import { Database, Code, TestTube2, HardDrive, ArrowRight, CheckCircle2 } from "lucide-react"
+import { Database, Code, TestTube2, HardDrive, ArrowRight, CheckCircle2, Table2 } from "lucide-react"
+import { useProject } from "@/contexts/ProjectContext"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { MetricCard } from "@/components/MetricCard"
@@ -20,16 +21,16 @@ import {
 } from "@/data/dashboard"
 
 const phaseRoutes: Record<string, string> = {
-  "step-1": "/db-migration/dms-results",
-  "step-2": "/db-migration/ai-schema",
-  "step-3": "/db-migration/schema-validation",
-  "step-4": "/app-migration/sql-extraction",
-  "step-5": "/app-migration/sql-filtering",
-  "step-6": "/app-migration/query-rewrite",
-  "step-7": "/app-migration/xml-merge",
-  "step-8": "/app-migration/test-support",
-  "step-9": "/data-migration/execution",
-  "step-10": "/data-migration/validation",
+  "step-1": "db-migration/dms-results",
+  "step-2": "db-migration/ai-schema",
+  "step-3": "db-migration/schema-validation",
+  "step-4": "app-migration/sql-extraction",
+  "step-5": "app-migration/sql-filtering",
+  "step-6": "app-migration/query-rewrite",
+  "step-7": "app-migration/xml-merge",
+  "step-8": "app-migration/test-support",
+  "step-9": "data-migration/execution",
+  "step-10": "data-migration/validation",
 }
 
 const phaseColors: Record<string, string> = {
@@ -52,6 +53,8 @@ const statusColors: Record<string, string> = {
 
 export default function DashboardPage() {
   const navigate = useNavigate()
+  const { activeProject } = useProject()
+  const scope = activeProject?.migrationScope
 
   return (
     <div className="space-y-8">
@@ -61,6 +64,28 @@ export default function DashboardPage() {
           Oracle Migration Accelerator 전체 마이그레이션 현황
         </p>
       </div>
+
+      {/* Migration Scope Summary */}
+      {scope && (
+        <div className="flex items-center gap-3 rounded-lg border border-border bg-card px-4 py-3">
+          <Table2 className="h-4 w-4 text-emerald-500 shrink-0" />
+          <div className="flex-1 min-w-0">
+            <span className="text-sm font-medium">마이그레이션 범위: </span>
+            <span className="text-sm text-muted-foreground">{scope.description}</span>
+            {scope.mode === 'schema' && scope.selectedSchemas.length > 0 && (
+              <span className="text-xs text-muted-foreground/60 ml-2">
+                ({scope.selectedSchemas.join(', ')})
+              </span>
+            )}
+          </div>
+          <button
+            onClick={() => navigate('settings/project')}
+            className="text-xs text-primary hover:underline shrink-0"
+          >
+            범위 수정
+          </button>
+        </div>
+      )}
 
       {/* 진행 현황 보드 */}
       <Card>

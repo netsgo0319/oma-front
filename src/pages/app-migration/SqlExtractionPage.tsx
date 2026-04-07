@@ -107,11 +107,11 @@ export default function SqlExtractionPage() {
                     : "bg-card text-muted-foreground hover:text-foreground"
                 }`}
               >
-                동적 추출 (Mock)
+                런타임 로그 수집
               </button>
             </div>
             <Button onClick={handleExecute} disabled={isRunning}>
-              {isRunning ? "추출 중..." : "추출 실행"}
+              {isRunning ? "추출 중..." : mode === "static" ? "추출 실행" : "로그 수집 시작"}
             </Button>
             {isRunning && (
               <div className="flex-1 max-w-md">
@@ -131,6 +131,36 @@ export default function SqlExtractionPage() {
           </div>
         </CardContent>
       </Card>
+
+      {/* Runtime log collection info */}
+      {mode === "dynamic" && !extracted && (
+        <Card>
+          <CardContent className="p-5 space-y-3">
+            <h3 className="text-sm font-semibold">런타임 SQL 로그 수집</h3>
+            <p className="text-xs text-muted-foreground">
+              몽키 테스트나 실제 서비스 운영 중 실행된 MyBatis 쿼리를 서버 로그(AOP/Interceptor)에서 수집하여
+              정적 추출로는 잡히지 않는 실제 비즈니스 SQL 패턴을 확인합니다.
+            </p>
+            <div className="grid grid-cols-3 gap-3 text-xs">
+              <div className="rounded-md border border-border p-3">
+                <p className="font-medium mb-1">1. 로그 소스</p>
+                <p className="text-muted-foreground">Spring AOP 에러 로그, MyBatis Interceptor 로그, 또는 서버 stdout</p>
+              </div>
+              <div className="rounded-md border border-border p-3">
+                <p className="font-medium mb-1">2. 수집 방식</p>
+                <p className="text-muted-foreground">로그 파일 업로드, S3 경로 지정, 또는 CloudWatch Log Group 연동</p>
+              </div>
+              <div className="rounded-md border border-border p-3">
+                <p className="font-medium mb-1">3. 분석 결과</p>
+                <p className="text-muted-foreground">실행된 SQL 파싱 → Mapper ID 매핑 → 바인드 변수 포함 실제 쿼리 추출</p>
+              </div>
+            </div>
+            <div className="rounded-md bg-muted/50 px-3 py-2 text-[11px] text-muted-foreground">
+              설정 위치: 설정 &gt; 테스트 설정 &gt; AOP 설정에서 로그 경로와 스토리지 타입을 지정하세요.
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Summary Stats */}
       {extracted && (
@@ -166,12 +196,12 @@ export default function SqlExtractionPage() {
             <CardContent className="p-4">
               <p className="text-sm text-muted-foreground">추출 모드</p>
               <p className="text-lg font-semibold mt-1">
-                {mode === "static" ? "정적 추출" : "동적 추출 (Mock)"}
+                {mode === "static" ? "정적 추출" : "런타임 로그 수집"}
               </p>
               <p className="text-xs text-muted-foreground mt-1">
                 {mode === "static"
                   ? "XML 파싱 기반 SQL 추출"
-                  : "런타임 SQL 캡처 시뮬레이션"}
+                  : "서버 로그 기반 실제 실행 SQL 수집"}
               </p>
             </CardContent>
           </Card>

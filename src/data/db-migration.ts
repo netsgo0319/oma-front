@@ -4,6 +4,8 @@ export const dmsPipelineSteps = [
   {
     name: 'Pre-Assessment',
     description: 'Oracle 데이터베이스 호환성 사전 평가 및 SCT 분석',
+    category: 'schema-conversion' as const,
+    provenance: 'aws-dms' as const,
     status: 'completed' as const,
     duration: '12m 34s',
     logs: [
@@ -17,6 +19,8 @@ export const dmsPipelineSteps = [
   {
     name: 'Schema Conversion',
     description: 'Oracle DDL → PostgreSQL DDL 자동 변환',
+    category: 'schema-conversion' as const,
+    provenance: 'aws-dms' as const,
     status: 'completed' as const,
     duration: '28m 17s',
     logs: [
@@ -32,6 +36,8 @@ export const dmsPipelineSteps = [
   {
     name: 'Agent Remediation',
     description: 'AI 에이전트를 통한 실패 객체 변환 재시도',
+    category: 'schema-conversion' as const,
+    provenance: 'oma-enhanced' as const,
     status: 'completed' as const,
     duration: '45m 08s',
     logs: [
@@ -47,6 +53,8 @@ export const dmsPipelineSteps = [
   {
     name: 'Schema Validation',
     description: '소스/타겟 스키마 비교 및 검증',
+    category: 'schema-conversion' as const,
+    provenance: 'oma-enhanced' as const,
     status: 'completed' as const,
     duration: '8m 52s',
     logs: [
@@ -62,6 +70,8 @@ export const dmsPipelineSteps = [
   {
     name: 'DMS Replication Setup',
     description: 'AWS DMS 복제 인스턴스 및 태스크 구성',
+    category: 'data-replication' as const,
+    provenance: 'aws-dms' as const,
     status: 'completed' as const,
     duration: '5m 21s',
     logs: [
@@ -77,6 +87,8 @@ export const dmsPipelineSteps = [
   {
     name: 'Full Load & CDC',
     description: '전체 데이터 로드 및 변경 데이터 캡처',
+    category: 'data-replication' as const,
+    provenance: 'aws-dms' as const,
     status: 'running' as const,
     duration: '2h 14m',
     logs: [

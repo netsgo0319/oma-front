@@ -536,3 +536,31 @@ The Operations stage will eventually include:
 - Application code: Workspace root (NEVER in aidlc-docs/)
 - Documentation: aidlc-docs/ only
 - Project structure: See code-generation.md for patterns by project type
+
+## Audit Trail Rules
+
+모든 작업에 대해 `audit.md` 파일에 의사결정 로그를 남긴다.
+
+### 필수 기록 항목
+- 모든 아키텍처/기술 결정 (왜 A를 선택하고 B를 버렸는지)
+- 파일 생성/수정/삭제 시 이유
+- 사용자의 원본 요청 (절대 요약하지 않음)
+- 에러 발생 및 해결 방법
+- 의존성 추가/변경 이유
+
+### audit.md 포맷
+항상 아래 형식으로 **append** (절대 덮어쓰기 금지):
+
+## [작업 제목]
+**Timestamp**: YYYY-MM-DDTHH:MM:SSZ
+**Request**: "[사용자 원본 입력]"
+**Decision**: [무엇을 결정했는지]
+**Rationale**: [왜 이 결정을 했는지]
+**Alternatives Considered**: [검토했으나 선택하지 않은 대안]
+**Files Affected**: [변경된 파일 목록]
+
+### 중요 규칙
+- audit.md는 APPEND ONLY. Write 도구로 전체를 덮어쓰지 말 것
+- 코드 작성 전에 먼저 audit.md에 계획을 기록할 것
+- 사소한 포맷팅 변경은 기록하지 않아도 됨
+- 새 파일 생성 시 반드시 기록

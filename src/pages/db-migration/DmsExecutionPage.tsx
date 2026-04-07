@@ -11,6 +11,8 @@ type StepStatus = "waiting" | "running" | "completed" | "failed"
 interface PipelineStepData {
   name: string
   description: string
+  category: string
+  provenance: string
   status: StepStatus
   duration: string
   logs: string[]
@@ -92,9 +94,9 @@ export default function DmsExecutionPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-3xl font-bold tracking-tight">DMS 스키마 변환</h2>
+          <h2 className="text-3xl font-bold tracking-tight">OMA 통합 파이프라인</h2>
           <p className="text-muted-foreground mt-1">
-            AWS DMS 기반 6단계 스키마 변환 파이프라인
+            AWS DMS + OMA 확장 6단계 스키마 변환 및 데이터 복제
           </p>
         </div>
         <Button
@@ -125,13 +127,24 @@ export default function DmsExecutionPage() {
         {/* Pipeline steps */}
         <div className="lg:col-span-1 space-y-3">
           {steps.map((step, idx) => {
+            const prevStep = steps[idx - 1]
+            const showCategoryHeader = idx === 0 || step.category !== prevStep?.category
             const config = statusConfig[step.status]
             const Icon = config.icon
             const isSelected = selectedStep === idx
 
             return (
+              <div key={step.name}>
+                {showCategoryHeader && (
+                  <div className="flex items-center gap-2 mb-2 mt-1">
+                    <div className="h-px flex-1 bg-border" />
+                    <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                      {step.category === 'schema-conversion' ? '스키마 변환' : '데이터 복제 설정'}
+                    </span>
+                    <div className="h-px flex-1 bg-border" />
+                  </div>
+                )}
               <button
-                key={step.name}
                 onClick={() => setSelectedStep(idx)}
                 className={cn(
                   "w-full text-left rounded-lg border-2 p-4 transition-all hover:shadow-md",
@@ -166,7 +179,17 @@ export default function DmsExecutionPage() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between gap-2">
-                      <p className="font-medium text-sm truncate">{step.name}</p>
+                      <div className="flex items-center gap-1.5 min-w-0">
+                        <p className="font-medium text-sm truncate">{step.name}</p>
+                        <span className={cn(
+                          "shrink-0 rounded px-1 py-0.5 text-[9px] font-medium",
+                          step.provenance === 'aws-dms'
+                            ? "bg-blue-500/15 text-blue-400"
+                            : "bg-purple-500/15 text-purple-400"
+                        )}>
+                          {step.provenance === 'aws-dms' ? 'AWS DMS' : 'OMA'}
+                        </span>
+                      </div>
                       <Badge
                         variant={
                           step.status === "completed"
@@ -206,6 +229,7 @@ export default function DmsExecutionPage() {
                   </div>
                 )}
               </button>
+              </div>
             )
           })}
         </div>

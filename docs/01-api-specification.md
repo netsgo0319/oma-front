@@ -8,7 +8,7 @@
 
 - **Base URL**: `{VITE_API_BASE_URL}` (예: `http://agentcore.internal:8080/api`)
 - **Format**: JSON (Content-Type: application/json)
-- **인증**: 향후 JWT Bearer Token 적용 예정
+- **인증**: JWT Bearer Token (프로덕션 배포 시 적용)
 - **에러 형식**: `{ error: string, detail?: string, status: number }`
 
 ---

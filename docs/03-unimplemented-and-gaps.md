@@ -95,7 +95,7 @@ Frontend  →  BFF Layer  →  OMA_Strands_Graph
 
 ## 3. 앱 마이그레이션 Gap
 
-> 앱 마이그레이션 백엔드 미전달 상태. 전달 후 업데이트 예정.
+> 소스: [strands-oracle-migration](https://github.com/cdanielsoh/strands-oracle-migration) — CLI only, FastAPI 래퍼 신규 구축 필요. 상세: [`05-app-migration-backend-analysis.md`](./05-app-migration-backend-analysis.md)
 
 ### 프론트엔드가 필요한 핵심 기능
 
@@ -147,7 +147,7 @@ OMA_Strands_Graph에는 이미 부분적으로 관련 기능이 있습니다:
 ### Phase 2: 앱 마이그레이션
 
 ```
-6. 앱 마이그레이션 백엔드 연동 (TBD)
+6. 앱 마이그레이션 백엔드 연동 (strands-oracle-migration FastAPI 래퍼)
 7. SQL 추출/변환/병합 실시간 진행률
 8. 수동 검수 SQL 편집기 ↔ 백엔드 구문 검증
 ```

@@ -1,7 +1,7 @@
 # OMA WebUI v2 — Backend Integration Guide
 
 > DB/데이터 마이그레이션 백엔드: [OMA_Strands_Graph](https://github.com/ren-ai-ssance/OMA_Strands_Graph)
-> 앱 마이그레이션 백엔드: TBD (추후 전달 예정)
+> 앱 마이그레이션 백엔드: [strands-oracle-migration](https://github.com/cdanielsoh/strands-oracle-migration) — FastAPI 래퍼 신규 구축 필요
 
 ---
 
@@ -24,9 +24,9 @@
                    ▼                  ▼
 ┌──────────────────────────┐  ┌─────────────────────────┐
 │  OMA_Strands_Graph       │  │  App Migration Backend  │
-│  (DB/Data Migration)     │  │  (TBD)                  │
+│  (DB/Data Migration)     │  │  (strands-oracle-migr.) │
 │                          │  │                         │
-│  FastAPI :8000           │  │  TBD :????              │
+│  FastAPI :8000           │  │  FastAPI :8001 (신규)   │
 │  /api/migrations         │  │  /api/app-migration/*   │
 │  /ws/migrations/{id}     │  │                         │
 │                          │  │                         │

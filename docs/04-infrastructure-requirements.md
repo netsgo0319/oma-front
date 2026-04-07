@@ -24,7 +24,7 @@
           ┌──────────────┐ ┌──────────────┐ ┌──────────────┐
           │ ECS Fargate  │ │ ECS Fargate  │ │ ECS Fargate  │
           │ OMA_Strands  │ │ App Migr.    │ │ WebUI        │
-          │ Graph :8000  │ │ Backend:TBD  │ │ (대안) :80   │
+          │ Graph :8000  │ │ Backend:8001 │ │ (대안) :80   │
           └──────┬───────┘ └──────┬───────┘ └──────────────┘
                  │                │
      ┌───────────┼────────────────┼─────────────┐
@@ -79,13 +79,15 @@
 | Health Check | `GET /api/health` |
 | 환경변수 | DB 접속정보, AWS 자격증명, Bedrock 모델 ID 등 |
 
-### 2.3 App Migration Backend (TBD)
+### 2.3 App Migration Backend ([strands-oracle-migration](https://github.com/cdanielsoh/strands-oracle-migration))
 
-| 항목 | 사양 (예상) |
+| 항목 | 사양 |
 |------|------|
-| Runtime | TBD |
-| CPU / Memory | TBD |
-| Port | TBD |
+| Runtime | Python 3.11+ (FastAPI 래퍼 신규 구축) |
+| CPU / Memory | 2 vCPU / 4 GB (최소), AI 에이전트 사용 시 4 vCPU / 8 GB 권장 |
+| Port | 8001 |
+| Health Check | `GET /api/health` |
+| 핵심 의존성 | Strands Agents SDK, sqlglot, oracledb, psycopg2, boto3 (Bedrock) |
 
 ### 2.4 데이터베이스
 

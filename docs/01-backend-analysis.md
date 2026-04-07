@@ -2,6 +2,8 @@
 
 > 현재 두 백엔드가 **무엇을 할 수 있는지** 정리한 문서.
 > 프론트엔드가 필요로 하는 API는 [02-frontend-api-requirements.md](./02-frontend-api-requirements.md) 참조.
+>
+> **최종 업데이트**: 2026-04-07
 
 ---
 

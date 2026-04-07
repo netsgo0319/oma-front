@@ -2,6 +2,22 @@
 
 > 프론트엔드가 **필요로 하는** 백엔드 API 목록.
 > 백엔드가 현재 무엇을 할 수 있는지는 [01-backend-analysis.md](./01-backend-analysis.md) 참조.
+>
+> **최종 업데이트**: 2026-04-07
+
+---
+
+## 프론트엔드 현재 상태
+
+| 항목 | 내용 |
+|------|------|
+| **프레임워크** | React 18 + TypeScript + Vite 8 |
+| **디자인** | Tailwind CSS v4 + shadcn/ui 스타일 (LiteLLM 디자인 컨셉 차용) |
+| **라우팅** | React Router v6 — `/` (프로젝트 목록), `/project/:projectId/*` (프로젝트 내부) |
+| **상태 관리** | React Context + localStorage (ProjectContext, FeatureFlags) |
+| **페이지 수** | 25개 (ProjectListPage + 24개 프로젝트 내부 페이지) |
+| **기능 토글** | 3단계 프리셋 (Basic 10 / Standard 17 / Advanced 23) |
+| **마이그레이션 스코프** | 프로젝트별 테이블/스키마 단위 선택 (src/data/table-catalog.ts 목데이터) |
 
 ---
 
@@ -11,7 +27,7 @@
 - **Format**: JSON (Content-Type: application/json)
 - **인증**: JWT Bearer Token (프로덕션 배포 시)
 - **에러 형식**: `{ error: string, detail?: string, status: number }`
-- **프로젝트 스코프**: 모든 API는 프로젝트 컨텍스트 내에서 동작 (헤더 `X-Project-Id` 또는 경로 prefix `/api/projects/{projectId}/...`)
+- **프로젝트 스코프**: 모든 API는 프로젝트 컨텍스트 내에서 동작 (경로 prefix `/api/projects/{projectId}/...`)
 
 ---
 
@@ -281,7 +297,7 @@ Query params: `?status=Converted|Failed|Pending&objectType=TABLE|PROCEDURE&schem
 
 | Method | Endpoint | 설명 |
 |--------|----------|------|
-| POST | `/api/app-migration/extraction/execute` | SQL 추출 실행. `{ mode: "static" | "dynamic" }` |
+| POST | `/api/app-migration/extraction/execute` | SQL 추출 실행. `{ mode: "static" | "runtime" }`. static=XML 파싱, runtime=서버 로그(AOP/Interceptor) 기반 실제 실행 SQL 수집 |
 | GET | `/api/app-migration/extraction/status` | 추출 진행률 (**SSE**) |
 | GET | `/api/app-migration/extraction/results` | 추출된 SQL 목록 |
 | GET | `/api/app-migration/extraction/results/csv` | CSV 다운로드 |

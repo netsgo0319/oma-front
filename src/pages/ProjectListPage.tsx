@@ -125,16 +125,16 @@ export default function ProjectListPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="mx-auto max-w-7xl px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-white font-bold text-sm">
+      {/* Header — LiteLLM style */}
+      <header className="sticky top-0 z-10 border-b border-border bg-white dark:bg-card">
+        <div className="mx-auto max-w-7xl px-6 h-14 flex items-center justify-between">
+          <div className="flex items-center gap-2.5">
+            <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary text-white font-bold text-xs">
               O
             </div>
             <div>
-              <h1 className="text-lg font-semibold">OMA WebUI</h1>
-              <p className="text-xs text-muted-foreground">Oracle Migration Accelerator</p>
+              <h1 className="text-[15px] font-semibold">OMA</h1>
+              <p className="text-[11px] text-muted-foreground -mt-0.5">Oracle Migration Accelerator</p>
             </div>
           </div>
           <button
@@ -178,7 +178,7 @@ export default function ProjectListPage() {
               <button
                 key={proj.id}
                 onClick={() => handleEnterProject(proj.id)}
-                className="group relative rounded-xl border border-border bg-card p-6 text-left transition-all hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-0.5"
+                className="group relative rounded-lg border border-border bg-card p-5 text-left transition-all hover:border-primary/40 hover:shadow-md"
               >
                 {/* Header */}
                 <div className="flex items-start justify-between mb-4">

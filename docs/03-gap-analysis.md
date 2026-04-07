@@ -2,6 +2,10 @@
 
 > Doc 1 ([01-backend-analysis.md](./01-backend-analysis.md))과 Doc 2 ([02-frontend-api-requirements.md](./02-frontend-api-requirements.md))를 비교하여 식별한 갭 목록.
 > 각 갭별로 해결 방안, 우선순위, 노력 추정을 포함합니다.
+>
+> **최종 업데이트**: 2026-04-07
+>
+> **프론트엔드 현행 상태**: 프로젝트 목록 페이지(`/`) → 프로젝트 진입(`/project/:id`) 구조. 프로젝트별 마이그레이션 스코프(테이블/스키마 선택), 기능 토글(3단계 프리셋), Assessment→AI Agent 리트라이 흐름, 런타임 로그 수집 모드 반영됨.
 
 ---
 
@@ -102,6 +106,7 @@
 | **변경 대상** | OMA_Strands_Graph: `api/db-migration/assessment/` 라우터 추가 |
 | **우선순위** | **P0 필수** |
 | **노력** | 백엔드 2일 |
+| **참고** | 프론트엔드 Assessment 결과 페이지는 "변환 완료/실패" 2개 상태만 표시. 실패 항목은 AI 에이전트 스키마 변환 페이지로 넘겨 리트라이. 리트라이 횟수 초과 시 최종 실패 처리. |
 
 ### GAP-07: AI 에이전트 파이프라인 상태 API
 

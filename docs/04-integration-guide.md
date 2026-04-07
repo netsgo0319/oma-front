@@ -1,7 +1,12 @@
 # OMA 프론트엔드-백엔드 통합 가이드
 
 > [03-gap-analysis.md](./03-gap-analysis.md)의 갭 분석 결과를 바탕으로 실제 통합 방법을 안내합니다.
-> 인프라 상세는 [04-infrastructure-requirements.md](./04-infrastructure-requirements.md) 참조.
+>
+> **최종 업데이트**: 2026-04-07
+>
+> **프론트엔드 현행**: React 18 + Vite 8 + Tailwind CSS v4 (LiteLLM 스타일 디자인).
+> 라우팅: `/` (ProjectListPage) → `/project/:projectId/*` (AppLayout 내 25개 페이지).
+> 상태: ProjectContext (localStorage) + FeatureFlags (3단계 프리셋) + MigrationScope (테이블 선택).
 
 ---
 
@@ -16,8 +21,8 @@
 │                                                                     │
 │  ┌──────────────┐  ┌──────────────┐  ┌──────────────────────────┐  │
 │  │ API Client   │  │ WS Client    │  │ State Management         │  │
-│  │ src/lib/api/ │  │ src/lib/ws/  │  │ src/contexts/            │  │
-│  │              │  │              │  │ ProjectContext (localStorage)│
+│  │ src/lib/api/ │  │ src/lib/ws/  │  │ ProjectContext (localStorage)│
+│  │              │  │              │  │ FeatureFlags + MigrationScope│
 │  └──────┬───────┘  └──────┬───────┘  └──────────────────────────┘  │
 │         │                  │                                        │
 └─────────┼──────────────────┼────────────────────────────────────────┘

@@ -214,47 +214,47 @@ export default function AppLayout() {
       {/* Sidebar */}
       <aside
         className={cn(
-          "flex flex-col bg-sidebar-background text-sidebar-foreground border-r border-sidebar-border transition-all duration-300 shrink-0",
-          collapsed ? "w-[60px]" : "w-[260px]"
+          "flex flex-col bg-sidebar-background text-sidebar-foreground border-r border-sidebar-border transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)] shrink-0",
+          collapsed ? "w-[60px]" : "w-[220px]"
         )}
       >
         {/* Logo + Project Info */}
         <div className="border-b border-sidebar-border shrink-0">
-          <div className="flex items-center gap-3 px-4 h-14">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-sidebar-primary text-white font-bold text-sm shrink-0">
+          <div className="flex items-center gap-2.5 px-3 h-12">
+            <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary text-white font-bold text-xs shrink-0">
               O
             </div>
             {!collapsed && (
-              <span className="text-sm font-semibold truncate">OMA WebUI</span>
+              <span className="text-[13px] font-semibold truncate text-foreground">OMA</span>
             )}
           </div>
 
           {/* Back to project list + project name */}
           {!collapsed && (
-            <div className="px-3 pb-3 space-y-2">
+            <div className="px-2.5 pb-2.5 space-y-1.5">
               <button
                 onClick={() => navigate("/")}
-                className="flex items-center gap-1.5 text-xs text-sidebar-foreground/60 hover:text-sidebar-foreground transition-colors"
+                className="flex items-center gap-1 text-[11px] text-sidebar-muted hover:text-sidebar-foreground transition-colors"
               >
-                <ArrowLeft className="h-3.5 w-3.5" />
+                <ArrowLeft className="h-3 w-3" />
                 <span>프로젝트 목록</span>
               </button>
 
               {activeProject && (
-                <div className="rounded-md border border-sidebar-border px-3 py-2">
-                  <div className="text-xs font-medium truncate">
+                <div className="rounded border border-sidebar-border/60 px-2.5 py-1.5 bg-sidebar-accent/30">
+                  <div className="text-[12px] font-medium truncate text-sidebar-foreground">
                     {activeProject.name}
                   </div>
-                  <div className="mt-1 flex items-center gap-1.5">
+                  <div className="mt-0.5 flex items-center gap-1.5">
                     <span
                       className={cn(
-                        "rounded-full px-2 py-0.5 text-[10px] font-medium",
+                        "rounded px-1.5 py-px text-[9px] font-medium",
                         presetColors[activeProject.featurePreset]
                       )}
                     >
                       {presetLabels[activeProject.featurePreset]}
                     </span>
-                    <span className="text-[10px] text-sidebar-foreground/40 truncate">
+                    <span className="text-[9px] text-sidebar-muted truncate">
                       {activeProject.settings.project.sourceDb.host
                         ? `${activeProject.settings.project.sourceDb.sid || "Oracle"} → ${activeProject.settings.project.targetDb.database || "PostgreSQL"}`
                         : "설정 필요"}
@@ -266,8 +266,8 @@ export default function AppLayout() {
           )}
         </div>
 
-        {/* Menu */}
-        <nav className="flex-1 overflow-y-auto py-2 px-2 space-y-0.5">
+        {/* Menu — compact LiteLLM style */}
+        <nav className="flex-1 overflow-y-auto py-1 px-1.5 space-y-px">
           {visibleMenuGroups.map((group) => {
             const Icon = group.icon
             const isActive = isActiveGroup(group)
@@ -280,13 +280,13 @@ export default function AppLayout() {
                   to={group.path}
                   end
                   className={cn(
-                    "flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors",
+                    "flex items-center gap-2.5 rounded px-2.5 py-[7px] text-[13px] transition-colors",
                     isActive
-                      ? "bg-sidebar-accent text-sidebar-foreground"
-                      : "text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground"
+                      ? "bg-primary/10 text-primary font-medium"
+                      : "text-sidebar-foreground hover:bg-sidebar-accent"
                   )}
                 >
-                  <Icon className="h-4 w-4 shrink-0" />
+                  <Icon className="h-[15px] w-[15px] shrink-0" />
                   {!collapsed && <span className="truncate">{group.label}</span>}
                 </NavLink>
               )
@@ -297,19 +297,19 @@ export default function AppLayout() {
                 <button
                   onClick={() => toggleGroup(group.label)}
                   className={cn(
-                    "flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors",
+                    "flex w-full items-center gap-2.5 rounded px-2.5 py-[7px] text-[13px] transition-colors",
                     isActive
-                      ? "bg-sidebar-accent/50 text-sidebar-foreground"
-                      : "text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground"
+                      ? "text-sidebar-foreground font-medium"
+                      : "text-sidebar-foreground hover:bg-sidebar-accent"
                   )}
                 >
-                  <Icon className="h-4 w-4 shrink-0" />
+                  <Icon className="h-[15px] w-[15px] shrink-0" />
                   {!collapsed && (
                     <>
                       <span className="flex-1 truncate text-left">{group.label}</span>
                       <ChevronDown
                         className={cn(
-                          "h-3.5 w-3.5 shrink-0 transition-transform",
+                          "h-3 w-3 shrink-0 transition-transform text-sidebar-muted",
                           isExpanded && "rotate-180"
                         )}
                       />
@@ -317,16 +317,16 @@ export default function AppLayout() {
                   )}
                 </button>
                 {!collapsed && isExpanded && group.children && (
-                  <div className="ml-4 mt-0.5 space-y-0.5 border-l border-sidebar-border pl-3">
+                  <div className="ml-[22px] mt-px space-y-px border-l border-sidebar-border pl-2.5">
                     {group.children.map((child) => (
                       <NavLink
                         key={child.path}
                         to={child.path}
                         className={cn(
-                          "block rounded-md px-3 py-1.5 text-xs transition-colors",
+                          "block rounded px-2 py-[5px] text-[12px] transition-colors",
                           location.pathname === child.path
-                            ? "bg-sidebar-accent text-sidebar-foreground"
-                            : "text-sidebar-foreground/60 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground"
+                            ? "bg-primary/10 text-primary font-medium"
+                            : "text-sidebar-muted hover:bg-sidebar-accent hover:text-sidebar-foreground"
                         )}
                       >
                         {child.label}
@@ -340,15 +340,15 @@ export default function AppLayout() {
         </nav>
 
         {/* Footer */}
-        <div className="border-t border-sidebar-border px-2 py-2 space-y-1 shrink-0">
+        <div className="border-t border-sidebar-border px-1.5 py-1.5 space-y-px shrink-0">
           <button
             onClick={toggleTheme}
-            className="flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground transition-colors"
+            className="flex w-full items-center gap-2.5 rounded px-2.5 py-[6px] text-[12px] text-sidebar-muted hover:bg-sidebar-accent hover:text-sidebar-foreground transition-colors"
           >
             {theme === "dark" ? (
-              <Sun className="h-4 w-4 shrink-0" />
+              <Sun className="h-[15px] w-[15px] shrink-0" />
             ) : (
-              <Moon className="h-4 w-4 shrink-0" />
+              <Moon className="h-[15px] w-[15px] shrink-0" />
             )}
             {!collapsed && (
               <span>{theme === "dark" ? "라이트 모드" : "다크 모드"}</span>
@@ -356,13 +356,13 @@ export default function AppLayout() {
           </button>
           <button
             onClick={() => setCollapsed((c) => !c)}
-            className="flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground transition-colors"
+            className="flex w-full items-center gap-2.5 rounded px-2.5 py-[6px] text-[12px] text-sidebar-muted hover:bg-sidebar-accent hover:text-sidebar-foreground transition-colors"
           >
             {collapsed ? (
-              <ChevronRight className="h-4 w-4 shrink-0" />
+              <ChevronRight className="h-[15px] w-[15px] shrink-0" />
             ) : (
               <>
-                <ChevronLeft className="h-4 w-4 shrink-0" />
+                <ChevronLeft className="h-[15px] w-[15px] shrink-0" />
                 <span>사이드바 접기</span>
               </>
             )}
@@ -372,12 +372,12 @@ export default function AppLayout() {
 
       {/* Main Content */}
       <div className="flex flex-1 flex-col overflow-hidden">
-        {/* Top Header */}
-        <header className="flex items-center h-14 border-b border-border bg-background px-6 shrink-0">
-          <div className="flex items-center gap-2 text-sm">
+        {/* Top Header — LiteLLM style: white, minimal */}
+        <header className="flex items-center h-12 border-b border-border bg-white dark:bg-card px-5 shrink-0">
+          <div className="flex items-center gap-1.5 text-[13px]">
             {breadcrumb.map((crumb, i) => (
-              <span key={i} className="flex items-center gap-2">
-                {i > 0 && <span className="text-muted-foreground">/</span>}
+              <span key={i} className="flex items-center gap-1.5">
+                {i > 0 && <span className="text-muted-foreground/40">/</span>}
                 <span className={i === breadcrumb.length - 1 ? "font-medium text-foreground" : "text-muted-foreground"}>
                   {crumb}
                 </span>
@@ -385,12 +385,12 @@ export default function AppLayout() {
             ))}
           </div>
           <div className="ml-auto">
-            <h1 className="text-sm font-semibold">{pageTitle}</h1>
+            <span className="text-[12px] text-muted-foreground">{pageTitle}</span>
           </div>
         </header>
 
         {/* Page Content */}
-        <main className="flex-1 overflow-auto p-6">
+        <main className="flex-1 overflow-auto p-5">
           <WorkflowStepIndicator />
           <Outlet />
         </main>
